@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Document</title>
+    <style>
+      body {
+        background: #d30fbc;
+        color: black;
+      }
+      .search-box {
+        width: 600px;
+        background: #fff;
+        margin: 200px auto 0;
+        border-radius: 5px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 20px;
+      }
+      input {
+        flex: 1;
+        height: 30px;
+        background: transparent;
+        border: 0;
+        outline: 0;
+        font-size: 18px;
+        color: #333;
+        padding-top: 15px;
+      }
+      button {
+        background: transparent;
+        border: 0;
+        outline: 0;
+      }
+      button.fa-solid {
+        width: 25px;
+        color: #555;
+        cursor: pointer;
+      }
+      ::placeholder {
+        color: #555;
+      }
+      .result-box li {
+        list-style: none;
+        padding: 10px 10px;
+      }
+
+      .displayBox {
+        color: white;
+        height: 50px;
+        width: 200px;
+        font-size: 2rem;
+        margin-left: 35%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="search-box">
+        <div class="row">
+          <input
+            type="text"
+            id="input-box"
+            placeholder="search item you want "
+            autocomplete="off"
+          />
+          <button onclick="search()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+        <div class="result-box"></div>
+      </div>
+      <br /><br />
+      <div class="displayBox"></div>
+    </div>
+    <script>
+      let displayBox = document.querySelector(".displayBox");
+      const searchItem = [
+        { item: "Coffee", Location: "Aisle no. 2" },
+        { item: "Monster", Location: "Aisle no. 1" },
+        { item: "Milk", Location: "Aisle no. 3" },
+        { item: "Coke", Location: "Aisle no. 5" },
+        { item: "Biscuits", Location: "Aisle no. 2" },
+        { item: "Snickers", Location: "Aisle no. 3" },
+        { item: "Red bull", Location: "Aisle no. 1" },
+        { item: "apple", Location: "Aisle no. 3" },
+        { item: "banana", Location: "Aisle no. 3" },
+        { item: "Coke", Location: "Aisle no. 2" },
+        { item: "Sprite", Location: "Aisle no 3" },
+      ];
+      const resultsBox = document.querySelector(".result-box");
+      const inputBox = document.getElementById("input-box");
+
+      inputBox.onkeyup = function () {
+        let result = "";
+        let input = inputBox.value;
+        if (input.length) {
+          result = searchItem.filter((element) => {
+            return element.item.toLowerCase().includes(input.toLowerCase());
+          });
+        }
+        display(result);
+      };
+      function display(result) {
+        const content = result.map((item) => {
+          return "<li onclick='selectInput(this)'>" + item.item + "</li>";
+        });
+        resultsBox.innerHTML = content.join("");
+      }
+      function selectInput(list) {
+        inputBox.value = list.innerHTML;
+        resultsBox.innerHTML = "";
+      }
+
+      const search = () => {
+        const inputValue = document.getElementById("input-box").value;
+        let found = false;
+        searchItem.forEach((element) => {
+          if (element.item.toLowerCase() === inputValue.toLowerCase()) {
+            found = true;
+            displayBox.innerHTML = `${element.item} is  in  ${element.Location}`;
+          }
+        });
+        if (!found) {
+          displayBox.innerHTML = "Item not found";
+        }
+      };
+    </script>
+  </body>
+</html>
